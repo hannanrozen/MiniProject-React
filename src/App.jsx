@@ -8,6 +8,7 @@ import {
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import UserDetailPage from "./pages/UserDetailPage";
+import AboutPage from "./pages/AboutPage"
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
@@ -27,12 +28,11 @@ function App() {
           path="/product-detail/:id"
           element={
             <ProtectedRoute>
-              <ProductDetail />
+              <UserDetailPage />
             </ProtectedRoute>
           }
         />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/user-detail/:id" element={<UserDetail />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
     </Router>

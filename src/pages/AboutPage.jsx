@@ -1,12 +1,12 @@
-// import React, { useState } from 'react';
 import Navbar from "../components/Navbar";
 
-const LoginPage = () => {
+const AboutPage = () => {
   return (
     <div>
       <Navbar />
       <h1>About Page</h1>
     </div>
-  )
+  );
 };
-export default LoginPage;
+
+export default AboutPage;
