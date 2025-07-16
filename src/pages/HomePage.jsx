@@ -76,7 +76,6 @@ const HomePage = () => {
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 text-center">Daftar User</h1>
 
-        {/* User Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {users.map((user) => (
             <div
@@ -99,7 +98,6 @@ const HomePage = () => {
           ))}
         </div>
 
-        {/* Pagination */}
         <div className="flex justify-center items-center space-x-4">
           <button
             onClick={() => handlePageChange(currentPage - 1)}

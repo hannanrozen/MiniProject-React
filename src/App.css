@@ -1,10 +1,8 @@
-/* App.css */
 .App {
   min-height: 100vh;
   background-color: #f7fafc;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .container {
     padding-left: 1rem;
@@ -12,7 +10,6 @@
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -30,7 +27,6 @@
   background: #555;
 }
 
-/* Loading animation */
 .loading-spinner {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #3498db;
@@ -49,7 +45,6 @@
   }
 }
 
-/* Card hover effects */
 .user-card {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
@@ -59,7 +54,6 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Button styles */
 .btn {
   transition: all 0.3s ease;
 }
