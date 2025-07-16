@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
@@ -42,11 +42,9 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          {isLogin ? "Login" : "Register"}
-        </h2>
+    <div className=" bg-gray-100 flex justify-center items-center  mx-auto my-auto min-h-screen">
+      <div className="flex flex-col gap-4 max-w-md w-full bg-white rounded-lg border border-black shadow-md p-6">
+        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -60,7 +58,7 @@ const LoginPage = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form className="gap-6" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Email
@@ -94,23 +92,14 @@ const LoginPage = () => {
             disabled={loading}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
           >
-            {loading ? "Loading..." : isLogin ? "Login" : "Register"}
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
         <div className="text-center mt-4">
-          <button
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setError("");
-              setSuccess("");
-              setEmail("");
-              setPassword("");
-            }}
-            className="text-blue-500 hover:text-blue-700"
-          >
-            {isLogin ? "Don't have an account yet?" : "Sudah punya akun? Login"}
-          </button>
+          <Link to="/register" className="text-blue-500 hover:text-blue-700">
+            don't have an account yet? Register
+          </Link>
         </div>
 
         <div className="mt-6 p-4 bg-gray-50 rounded">

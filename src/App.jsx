@@ -28,7 +28,7 @@ function App() {
           }
         />
         <Route
-          path="/product-detail/:id"
+          path="/user/:id"
           element={
             <ProtectedRoute>
               <UserDetailPage />
