@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -17,91 +17,91 @@ const RegisterPage = () => {
     setError("");
     setSuccess("");
 
-    // Validasi password
+    // Validasi password match
     if (password !== confirmPassword) {
       setError("Password tidak cocok");
       setLoading(false);
       return;
     }
 
-    const payload = { email, password };
-
     try {
-      const response = await axios.post(
-        "https://reqres.in/api/register",
-        payload
-      );
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-      setSuccess("Register berhasil! Silakan login.");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      const response = await api.post("/register", {
+        email: email.trim(),
+        password: password.trim(),
+      });
+
+      if (response.data && response.data.token) {
+        setSuccess("Registrasi berhasil!");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      }
     } catch (error) {
-      setError(
-        error.response?.data?.error || "Terjadi kesalahan saat register"
-      );
+      console.error("Register error:", error);
+      setError(error.response?.data?.error || "Gagal melakukan registrasi");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Create Account
+          </h1>
+          <p className="text-gray-600">Daftar untuk memulai</p>
+        </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
             {success}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              placeholder="Masukkan email"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              placeholder="Masukkan password"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Konfirmasi Password
             </label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              placeholder="Konfirmasi password"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
           </div>
@@ -109,22 +109,22 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition duration-200 disabled:bg-green-400"
           >
-            {loading ? "Loading..." : "Register"}
+            {loading ? "Loading..." : "Daftar"}
           </button>
         </form>
 
-        <div className="text-center mt-4">
-          <Link to="/login" className="text-blue-500 hover:text-blue-700">
-            Sudah punya akun? Login di sini
-          </Link>
-        </div>
-
-        <div className="mt-6 p-4 bg-gray-50 rounded">
-          <p className="text-sm text-gray-600 mb-2">Info untuk register:</p>
-          <p className="text-xs text-gray-500">Email: eve.holt@reqres.in</p>
-          <p className="text-xs text-gray-500">Password: pistol</p>
+        <div className="text-center mt-6">
+          <p className="text-gray-600">
+            Sudah punya akun?{" "}
+            <Link
+              to="/login"
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              Masuk di sini
+            </Link>
+          </p>
         </div>
       </div>
     </div>

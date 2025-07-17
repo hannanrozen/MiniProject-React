@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Navbar from "../components/Navbar";
+import api from "../services/api";
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
@@ -14,9 +14,7 @@ const HomePage = () => {
   const fetchUsers = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `https://reqres.in/api/users?page=${page}`
-      );
+      const response = await api.get(`/users?page=${page}`);
 
       console.log("API Response:", response.data);
       if (response.data && response.data.data) {
