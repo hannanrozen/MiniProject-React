@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
+import Back from "../assets/icons/back.svg";
 
 const UserDetail = () => {
   const [user, setUsers] = useState({ data: null, support: null });
@@ -65,19 +66,7 @@ const UserDetail = () => {
         bg-[#090979] text-white rounded-lg hover:bg-[#1e1ea8] 
         transition-all duration-300 shadow-md"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
+            <img src={Back} alt="Back" className="w-6 h-6" />
             Back
           </button>
         </div>
