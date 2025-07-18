@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
@@ -11,7 +11,7 @@ const UserDetail = () => {
   const navigate = useNavigate();
   const id = useParams().id;
 
-  const fetchUser = useCallback(async (userId) => {
+  const fetchUser = async (userId) => {
     setLoading(true);
     try {
       const response = await api.get(`/users/${userId}`);
@@ -27,11 +27,11 @@ const UserDetail = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchUser(id);
-  }, [id, fetchUser]);
+  }, [id]);
 
   if (loading) {
     return (
