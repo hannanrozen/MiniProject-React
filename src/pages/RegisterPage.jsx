@@ -17,7 +17,6 @@ const RegisterPage = () => {
     setError("");
     setSuccess("");
 
-    // Validasi password match
     if (password !== confirmPassword) {
       setError("Password tidak cocok");
       setLoading(false);
@@ -51,7 +50,7 @@ const RegisterPage = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Create Account
           </h1>
-          <p className="text-gray-600">Daftar untuk memulai</p>
+          <p className="text-gray-600">Register to get started</p>
         </div>
 
         {error && (
@@ -75,6 +74,7 @@ const RegisterPage = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Input your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
@@ -88,6 +88,7 @@ const RegisterPage = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Input your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
@@ -95,12 +96,13 @@ const RegisterPage = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Konfirmasi Password
+              Confirm Password
             </label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Input your confirm password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
@@ -117,13 +119,13 @@ const RegisterPage = () => {
 
         <div className="text-center mt-6">
           <p className="text-gray-600">
-            Sudah punya akun?{" "}
-            <Link
-              to="/login"
+            Have an account?{" "}
+            <button
+              onClick={() => navigate("/login")}
               className="text-green-600 hover:text-green-700 font-medium"
             >
-              Masuk di sini
-            </Link>
+              Login Here
+            </button>
           </p>
         </div>
       </div>

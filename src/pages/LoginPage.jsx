@@ -10,11 +10,6 @@ const LoginPage = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const fillDemoCredentials = () => {
-    setEmail("eve.holt@reqres.in");
-    setPassword("cityslicka");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -51,7 +46,7 @@ const LoginPage = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Welcome Back
           </h1>
-          <p className="text-gray-600">Masuk ke akun Anda</p>
+          <p className="text-gray-600">Login To Your Account</p>
         </div>
 
         {error && (
@@ -102,7 +97,7 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-              placeholder="Masukkan email Anda"
+              placeholder="Input your email"
               required
             />
           </div>
@@ -116,7 +111,7 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-              placeholder="Masukkan password Anda"
+              placeholder="Input your password"
               required
             />
           </div>
@@ -157,33 +152,13 @@ const LoginPage = () => {
 
         <div className="text-center mt-6">
           <p className="text-gray-600">
-            Belum punya akun?{" "}
-            <Link
-              to="/register"
+            Don't have an account?{" "}
+            <button
+              onClick={() => navigate("/register")}
               className="text-blue-600 hover:text-blue-700 font-medium"
             >
-              Daftar di sini
-            </Link>
-          </p>
-        </div>
-
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-600 font-medium">
-              Demo Credentials:
-            </p>
-            <button
-              type="button"
-              onClick={fillDemoCredentials}
-              className="text-xs text-blue-600 hover:text-blue-700"
-            >
-              Use Demo
+              Register Here
             </button>
-          </div>
-          <p className="text-xs text-gray-500">Email: eve.holt@reqres.in</p>
-          <p className="text-xs text-gray-500">Password: cityslicka</p>
-          <p className="text-xs text-gray-400 mt-2">
-            * Gunakan kredensial demo untuk testing
           </p>
         </div>
       </div>

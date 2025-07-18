@@ -72,9 +72,9 @@ const HomePage = () => {
     <div>
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8 text-center">Daftar User</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">User List</h1>
 
-        <div className="grid grid-cols-1 max-w-6xl mx-auto md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 max-w-6xl mx-auto lg:grid-cols-3 gap-6 mb-8">
           {users.map((user) => (
             <div
               key={user.id}
@@ -100,9 +100,9 @@ const HomePage = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gradient-to-r from-[#020024] to-[#090979] text-white rounded-lg
-              hover:from-[#090979] hover:to-[#00d4ff] transition-all duration-300
-              disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            className="px-4 py-2 bg-[#090979] text-white rounded-lg
+              hover:bg-[#1e1ea8] transition-all duration-300
+              disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
           >
             Previous
           </button>
@@ -114,8 +114,8 @@ const HomePage = () => {
                 onClick={() => handlePageChange(index + 1)}
                 className={`px-3 py-1 rounded shadow-md ${
                   currentPage === index + 1
-                    ? "bg-gradient-to-r from-[#090979] to-[#00d4ff] text-white"
-                    : "bg-white/10 text-[#090979] hover:bg-gradient-to-r hover:from-[#020024] hover:to-[#090979] hover:text-white"
+                    ? "bg-[#090979] text-white shadow-md"
+                    : "bg-white text-[#090979] border border-[#090979]/30 hover:border-[#090979] hover:bg-[#090979]/5"
                 }`}
               >
                 {index + 1}
@@ -126,16 +126,12 @@ const HomePage = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gradient-to-r from-[#020024] to-[#090979] text-white rounded-lg
-              hover:from-[#090979] hover:to-[#00d4ff] transition-all duration-300
-              disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            className="px-4 py-2 bg-[#090979] text-white rounded-lg
+              hover:bg-[#1e1ea8] transition-all duration-300
+              disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
           >
             Next
           </button>
-        </div>
-
-        <div className="text-center mt-4 text-[#090979] font-medium">
-          Halaman {currentPage} dari {totalPages}
         </div>
       </div>
     </div>

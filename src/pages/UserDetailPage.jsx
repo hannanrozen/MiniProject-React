@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
 
 const UserDetail = () => {
-  const [user, setUsers] = useState([]);
+  const [user, setUsers] = useState({ data: null, support: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const id = useParams().id;
 
-  const fetchUser = async (userId) => {
+  const fetchUser = useCallback(async (userId) => {
     setLoading(true);
     try {
       const response = await api.get(`/users/${userId}`);
-
-      console.log("API Response:", response.data);
-      if (response.data && response.data.data) {
-        setUsers(response.data.data);
+      console.log("Response:", response.data);
+      if (response.data) {
+        setUsers({ data: response.data.data, support: response.data.support });
       } else {
         setError("Format data tidak sesuai");
       }
@@ -27,11 +26,11 @@ const UserDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchUser(id);
-  }, []);
+  }, [id, fetchUser]);
 
   if (loading) {
     return (
@@ -58,26 +57,67 @@ const UserDetail = () => {
   return (
     <div>
       <Navbar />
-      <button
-        onClick={() => navigate("/")}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4"
-      >
-        Back
-      </button>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">User Detail</h1>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex flex-col items-center">
-            <h2 className="text-xl font-semibold mb-2">User Information</h2>
+      <div className="mt-20 container mx-auto px-4">
+        <div className="flex max-w-6xl mx-auto p-6">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 mb-6 px-4 py-2 
+        bg-[#090979] text-white rounded-lg hover:bg-[#1e1ea8] 
+        transition-all duration-300 shadow-md"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back
+          </button>
+        </div>
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="relative h-32 bg-gradient-to-r from-[#020024] via-[#090979] to-[#00d4ff]">
             <img
-              src={user.avatar}
-              alt={"Avatar"}
-              className="w-20 h-20 rounded-full mb-4"
+              src={user.data?.avatar}
+              alt={"User avatar"}
+              className="absolute left-1/2 transform -translate-x-1/2 translate-y-1/2 bottom-0
+            w-32 h-32 rounded-full border-4 border-white shadow-lg"
             />
-            <p className="text-gray-600">Email: {user?.email}</p>
-            <h3 className="text-xl font-semibold mb-2">
-              {user?.first_name} {user?.last_name}
-            </h3>
+          </div>
+
+          <div className="pt-20 pb-8 px-6">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                {user.data?.first_name} {user.data?.last_name}
+              </h1>
+              <h2 className="text-2xl font-bold text-gray-900 mb-1">
+                {user.data?.text}
+              </h2>
+              <p className="text-gray-600 mb-4">{user.data?.email}</p>
+
+              {user.support && (
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <p className="text-black font-semibold">
+                    {`"${user.support.text}"`}
+                  </p>
+                  <a
+                    href={user.support.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-[#090979] hover:text-[#1e1ea8] 
+                     transition-colors duration-300 underline"
+                  >
+                    Support Link
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
