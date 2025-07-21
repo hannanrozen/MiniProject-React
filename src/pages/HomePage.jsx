@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import api from "../services/api";
 
 const HomePage = () => {
@@ -48,8 +47,7 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <div>
-        <Navbar />
+      <div className="pt-20">
         <div className="flex justify-center items-center h-64">
           <div className="text-lg">Loading...</div>
         </div>
@@ -59,8 +57,7 @@ const HomePage = () => {
 
   if (error) {
     return (
-      <div>
-        <Navbar />
+      <div className="pt-20">
         <div className="flex justify-center items-center h-64">
           <div className="text-red-500">{error}</div>
         </div>
@@ -69,8 +66,7 @@ const HomePage = () => {
   }
 
   return (
-    <div>
-      <Navbar />
+    <div className="pt-20">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 text-center">User List</h1>
 
@@ -100,8 +96,8 @@ const HomePage = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-[#090979] text-white rounded-lg
-              hover:bg-[#1e1ea8] transition-all duration-300
+            className="px-4 py-2 bg-[#4F46E5] text-white rounded-lg
+              hover:bg-indigo-500 transition-all duration-300
               disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
           >
             Previous
@@ -114,8 +110,8 @@ const HomePage = () => {
                 onClick={() => handlePageChange(index + 1)}
                 className={`px-3 py-1 rounded shadow-md ${
                   currentPage === index + 1
-                    ? "bg-[#090979] text-white shadow-md"
-                    : "bg-white text-[#090979] border border-[#090979]/30 hover:border-[#090979] hover:bg-[#090979]/5"
+                    ? "bg-[#4F46E5] text-white shadow-md"
+                    : "bg-white text-[#4F46E5] border border-[#4F46E5]/30 hover:border-indigo-500 hover:bg-[#4F46E5]/5"
                 }`}
               >
                 {index + 1}
@@ -126,8 +122,8 @@ const HomePage = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-[#090979] text-white rounded-lg
-              hover:bg-[#1e1ea8] transition-all duration-300
+            className="px-4 py-2 bg-[#4F46E5] text-white rounded-lg
+              hover:bg-indigo-500 transition-all duration-300
               disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
           >
             Next

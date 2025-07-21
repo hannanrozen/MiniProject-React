@@ -30,10 +30,12 @@ const RegisterPage = () => {
       });
 
       if (response.data && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        window.dispatchEvent(new Event("loginStatusChanged"));
         setSuccess("Registrasi berhasil!");
         setTimeout(() => {
-          navigate("/login");
-        }, 1500);
+          navigate("/home");
+        }, 500);
       }
     } catch (error) {
       console.error("Register error:", error);
@@ -44,7 +46,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center px-4 pt-20">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">

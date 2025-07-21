@@ -24,10 +24,11 @@ const LoginPage = () => {
 
       if (response.data && response.data.token) {
         localStorage.setItem("token", response.data.token);
+        window.dispatchEvent(new Event("loginStatusChanged"));
         setSuccess("Login berhasil!");
         setTimeout(() => {
-          navigate("/");
-        }, 1500);
+          navigate("/home");
+        }, 500);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -40,7 +41,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 pt-20">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
