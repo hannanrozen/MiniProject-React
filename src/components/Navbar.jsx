@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../assets/icons/llogo.svg";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Check if current page is auth page
+  const authPages = ["/login", "/register"];
+  const isAuthPage = authPages.includes(location.pathname);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log("Navbar: Current token:", token);
     setIsLoggedIn(!!token);
 
     const handleStorageChange = () => {
       const token = localStorage.getItem("token");
+      console.log("Navbar: Token changed:", token);
       setIsLoggedIn(!!token);
     };
 
@@ -27,6 +34,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
+    console.log("Logout clicked");
     setIsLoggedIn(false);
     localStorage.removeItem("token");
     window.dispatchEvent(new Event("loginStatusChanged"));
@@ -99,6 +107,21 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // If it's an auth page, show minimal navbar with centered logo
+  if (isAuthPage) {
+    return (
+      <nav className="flex justify-center items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-10">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={handleLogoClick}
+        >
+          <img src={LogoImg} alt="Staffinity Logo" className="h-8 w-auto" />
+        </div>
+      </nav>
+    );
+  }
+
+  // Regular navbar for non-auth pages
   return (
     <nav className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-10">
       <div
@@ -147,8 +170,17 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-4">
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200"
+            className="flex items-center gap-2 text-gray-700 font-medium hover:text-indigo-500 transition-colors duration-200 group"
           >
+            <svg
+              className="w-4 h-4 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+            >
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+            </svg>
             Logout
           </button>
         </div>
@@ -195,11 +227,19 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <div className="text-center py-2"></div>
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg w-full"
+                  className="flex items-center justify-center gap-2 text-gray-700 font-medium hover:text-indigo-500 transition-colors duration-200 w-full py-2 group"
                 >
+                  <svg
+                    className="w-4 h-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                  </svg>
                   Logout
                 </button>
               </>
