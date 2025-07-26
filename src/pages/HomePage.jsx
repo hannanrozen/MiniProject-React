@@ -5,36 +5,28 @@ import Footer from "../components/Footer";
 import UserCard from "../components/UserCard";
 
 const HomePage = () => {
+  const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const [displayedUsers, setDisplayedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(2);
+  const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
 
-  // Fetch all 12 users (2 pages of 6 users each)
-  const fetchAllUsers = async () => {
+  const fetchUsers = async (page = 1) => {
     setLoading(true);
     try {
-      // Fetch page 1 and page 2 to get exactly 12 users
-      const [page1Response, page2Response] = await Promise.all([
-        api.get("/users?page=1"),
-        api.get("/users?page=2"),
-      ]);
-
-      const page1Users = page1Response.data?.data || [];
-      const page2Users = page2Response.data?.data || [];
-      const combinedUsers = [...page1Users, ...page2Users];
-
-      setAllUsers(combinedUsers);
-
-      // Display first 6 users initially (page 1)
-      setDisplayedUsers(combinedUsers.slice(0, 6));
-      setCurrentPage(1);
-      setTotalPages(2);
+      const response = await api.get(`/users?page=${page}`);
+      if (response.data && response.data.data) {
+        setUsers(response.data.data);
+        setAllUsers(response.data.data);
+        setCurrentPage(response.data.page || 1);
+        setTotalPages(response.data.total_pages || 1);
+      } else {
+        setError("Format data tidak sesuai");
+      }
     } catch (error) {
       console.error("Error fetching users:", error);
       setError("Gagal memuat data users");
@@ -43,19 +35,8 @@ const HomePage = () => {
     }
   };
 
-  const fetchUsers = async (page = 1) => {
-    if (allUsers.length === 0) return;
-
-    const startIndex = (page - 1) * 6;
-    const endIndex = startIndex + 6;
-    const pageUsers = allUsers.slice(startIndex, endIndex);
-
-    setDisplayedUsers(pageUsers);
-    setCurrentPage(page);
-  };
-
   useEffect(() => {
-    fetchAllUsers();
+    fetchUsers();
   }, []);
 
   const handlePageChange = (page) => {
@@ -79,13 +60,12 @@ const HomePage = () => {
         `${user.first_name} ${user.last_name}`.toLowerCase().includes(value) ||
         user.email.toLowerCase().includes(value)
     );
-    setDisplayedUsers(filtered.slice(0, 6)); // Show first 6 of filtered results
+    setUsers(filtered);
   };
 
   const handleClearSearch = () => {
     setSearchTerm("");
-    setDisplayedUsers(allUsers.slice(0, 6)); // Reset to first page
-    setCurrentPage(1);
+    setUsers(allUsers);
   };
 
   const handleKeyPress = (e) => {
@@ -96,9 +76,20 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <div className="pt-20">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-lg">Loading...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 pt-20">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-center">
+            <div className="relative mb-6">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#4F46E5]/20 mx-auto"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#4F46E5] border-t-transparent absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+            </div>
+            <div className="text-xl font-bold text-gray-800 mb-2">
+              Loading Team Directory...
+            </div>
+            <div className="text-sm text-gray-500">
+              Please wait while we fetch your team data
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -106,9 +97,34 @@ const HomePage = () => {
 
   if (error) {
     return (
-      <div className="pt-20">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-red-500">{error}</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50 to-pink-50 pt-20">
+        <div className="flex justify-center items-center h-96">
+          <div className="text-center max-w-md mx-auto p-8">
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20">
+              <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <svg
+                  className="w-8 h-8 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div className="text-red-600 text-lg font-bold mb-4">{error}</div>
+              <button
+                onClick={() => fetchUsers()}
+                className="px-6 py-3 bg-gradient-to-r from-[#4F46E5] to-purple-600 text-white font-semibold rounded-2xl hover:from-[#4F46E5]/90 hover:to-purple-600/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -226,156 +242,6 @@ const HomePage = () => {
       </div>
 
       <div className="container mx-auto px-4 pb-12">
-        {/* Staffinity Features Section */}
-        <section className="bg-gradient-to-br from-white/90 to-indigo-50/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-12">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Staffinity Core Features
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Experience the power of modern HR management with our
-              comprehensive suite of tools designed to strengthen workplace
-              collaboration
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-r from-[#4F46E5] to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-indigo-600 mb-3 group-hover:text-[#4F46E5] transition-colors duration-300">
-                Visual Organization
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                See your entire team in a dynamic org chart with real-time
-                updates and interactive member profiles.
-              </p>
-              <div className="mt-4 flex items-center text-sm text-[#4F46E5] font-medium">
-                <span>Active: {allUsers.length} members</span>
-                <div className="w-2 h-2 bg-green-500 rounded-full ml-2 animate-pulse"></div>
-              </div>
-            </div>
-
-            <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-indigo-600 mb-3 group-hover:text-[#4F46E5] transition-colors duration-300">
-                HR Analytics
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Track growth, engagement, and retention trends easily with
-                comprehensive data visualization and insights.
-              </p>
-              <div className="mt-4 flex items-center text-sm text-emerald-600 font-medium">
-                <span>Engagement: 84% avg</span>
-                <svg
-                  className="w-4 h-4 ml-1 text-green-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-indigo-600 mb-3 group-hover:text-[#4F46E5] transition-colors duration-300">
-                Recognize Excellence
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Celebrate employee milestones and achievements with our
-                integrated recognition and rewards system.
-              </p>
-              <div className="mt-4 flex items-center text-sm text-orange-600 font-medium">
-                <span>94% satisfaction</span>
-                <svg
-                  className="w-4 h-4 ml-1 text-yellow-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 17h5l-5 5v-5zM3 12l2-2m0 0l7 7-7-7zM5 10l7 7m0 0l7-7m-7 7V3"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-indigo-600 mb-3 group-hover:text-[#4F46E5] transition-colors duration-300">
-                Smart Notifications
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Get intelligent reminders for contracts, events, birthdays, and
-                important organizational milestones.
-              </p>
-              <div className="mt-4 flex items-center text-sm text-purple-600 font-medium">
-                <span>Real-time alerts</span>
-                <div className="w-2 h-2 bg-purple-500 rounded-full ml-2 animate-ping"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Enhanced Search Section */}
         <section className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-12">
           <div className="text-center mb-8">
@@ -474,8 +340,7 @@ const HomePage = () => {
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-[#4F46E5] rounded-full mr-2"></div>
                 <span>
-                  Showing: {displayedUsers.length} results
-                  {searchTerm && " (filtered)"}
+                  Showing: {users.length} results{searchTerm && " (filtered)"}
                 </span>
               </div>
             </div>
@@ -494,7 +359,7 @@ const HomePage = () => {
             </p>
           </div>
 
-          {displayedUsers.length === 0 ? (
+          {users.length === 0 ? (
             <div className="text-center py-20">
               <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
                 <svg
@@ -528,7 +393,7 @@ const HomePage = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
-                {displayedUsers.map((user) => (
+                {users.map((user) => (
                   <UserCard
                     key={user.id}
                     user={user}
@@ -543,15 +408,13 @@ const HomePage = () => {
                   <div className="flex items-center space-x-2 text-sm text-gray-600">
                     <span>Showing</span>
                     <span className="font-semibold text-[#4F46E5]">
-                      {displayedUsers.length}
+                      {users.length}
                     </span>
                     <span>of</span>
                     <span className="font-semibold text-[#4F46E5]">
                       {allUsers.length}
                     </span>
-                    <span>
-                      team members (Page {currentPage} of {totalPages})
-                    </span>
+                    <span>team members</span>
                   </div>
 
                   <div className="flex items-center space-x-3">

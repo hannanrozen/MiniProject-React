@@ -1,16 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Back from "../assets/icons/back.svg";
+import { ArrowLeft } from "lucide-react";
 
-const BackButton = () => {
+const BackButton = ({ to = "/home" }) => {
   const navigate = useNavigate();
+
   return (
     <button
-      onClick={() => navigate("/home")}
-      className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg"
+      onClick={() => navigate(to)}
+      className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl hover:bg-white hover:text-[#4F46E5] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-white/20"
     >
-      <img src={Back} alt="Back" className="w-5 h-5" />
-      Back to Home
+      <div className="w-8 h-8 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-[#4F46E5]/10 transition-colors duration-300">
+        <ArrowLeft
+          size={20}
+          className="text-gray-600 group-hover:text-[#4F46E5] group-hover:scale-110 transition-all duration-300"
+        />
+      </div>
+      <span className="font-semibold">Back to Home</span>
     </button>
   );
 };

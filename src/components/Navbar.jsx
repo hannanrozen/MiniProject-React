@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LogoImg from "../assets/icons/llogo.svg";
+import { LogOut, Menu } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ const Navbar = () => {
   // If it's an auth page, show minimal navbar with centered logo
   if (isAuthPage) {
     return (
-      <nav className="flex justify-center items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-10">
+      <nav className="flex justify-center items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50">
         <div
           className="flex items-center cursor-pointer"
           onClick={handleLogoClick}
@@ -123,7 +124,7 @@ const Navbar = () => {
 
   // Regular navbar for non-auth pages
   return (
-    <nav className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-10">
+    <nav className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50">
       <div
         className="flex items-center cursor-pointer"
         onClick={handleLogoClick}
@@ -172,27 +173,17 @@ const Navbar = () => {
             onClick={handleLogout}
             className="flex items-center gap-2 text-gray-700 font-medium hover:text-indigo-500 transition-colors duration-200 group"
           >
-            <svg
-              className="w-4 h-4 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-            >
-              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
-            </svg>
+            <LogOut className="w-4 h-4" />
             Logout
           </button>
         </div>
       )}
 
       <button
-        className="md:hidden flex flex-col gap-1 p-2"
+        className="md:hidden flex items-center justify-center p-2"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
-        <span className="w-6 h-0.5 bg-gray-700"></span>
-        <span className="w-6 h-0.5 bg-gray-700"></span>
-        <span className="w-6 h-0.5 bg-gray-700"></span>
+        <Menu className="w-6 h-6 text-gray-700" />
       </button>
 
       {isMobileMenuOpen && (
@@ -231,15 +222,7 @@ const Navbar = () => {
                   onClick={handleLogout}
                   className="flex items-center justify-center gap-2 text-gray-700 font-medium hover:text-indigo-500 transition-colors duration-200 w-full py-2 group"
                 >
-                  <svg
-                    className="w-4 h-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                  >
-                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
-                  </svg>
+                  <LogOut className="w-4 h-4" />
                   Logout
                 </button>
               </>
