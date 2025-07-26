@@ -7,7 +7,6 @@ const UserCard = ({ user, onClick }) => {
       onClick={() => onClick(user.id)}
       className="group relative bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1"
     >
-      {/* Decorative elements */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="w-2 h-2 bg-[#4F46E5] rounded-full animate-pulse"></div>
       </div>
@@ -31,7 +30,6 @@ const UserCard = ({ user, onClick }) => {
           <p className="text-gray-600 text-sm font-medium">{user.email}</p>
         </div>
 
-        {/* Status badges */}
         <div className="flex items-center gap-2 mb-4">
           <span className="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-full">
             Active
@@ -41,7 +39,6 @@ const UserCard = ({ user, onClick }) => {
           </span>
         </div>
 
-        {/* Action buttons */}
         <div className="flex items-center gap-3 w-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
           <button className="flex-1 px-3 py-2 bg-[#4F46E5] text-white text-sm font-medium rounded-lg hover:bg-[#4F46E5]/90 transition-colors duration-200">
             View Profile
@@ -51,7 +48,6 @@ const UserCard = ({ user, onClick }) => {
           </button>
         </div>
 
-        {/* Background decoration */}
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#4F46E5]/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
       </div>
     </div>

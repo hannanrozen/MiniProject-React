@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
 import BackButton from "../components/BackButton";
 import UserProfileCard from "../components/UserProfileCard";
-import UserStats from "../components/UserStats";
 import UserActions from "../components/UserActions";
+import UserStats from "../components/UserStats";
 import UserTabs from "../components/UserTabs";
 
 const UserDetailPage = () => {
@@ -94,7 +94,6 @@ const UserDetailPage = () => {
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-[#4F46E5]/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>

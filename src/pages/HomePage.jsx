@@ -11,6 +11,7 @@ const HomePage = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
@@ -21,9 +22,14 @@ const HomePage = () => {
       const response = await api.get(`/users?page=${page}`);
       if (response.data && response.data.data) {
         setUsers(response.data.data);
-        setAllUsers(response.data.data);
+
+        if (page === 1) {
+          setAllUsers(response.data.data);
+        }
         setCurrentPage(response.data.page || 1);
         setTotalPages(response.data.total_pages || 1);
+
+        setTotalUsers(response.data.total || response.data.data.length);
       } else {
         setError("Format data tidak sesuai");
       }
@@ -168,7 +174,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                  {allUsers.length}
+                  {totalUsers}
                 </h3>
                 <p className="text-gray-600 text-sm">Total Members</p>
               </div>
@@ -190,7 +196,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                  {Math.floor(allUsers.length * 0.85)}
+                  {Math.floor(totalUsers * 0.85)}
                 </h3>
                 <p className="text-gray-600 text-sm">Active Today</p>
               </div>
@@ -212,7 +218,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                  +{Math.floor(allUsers.length * 0.15)}
+                  +{Math.floor(totalUsers * 0.15)}
                 </h3>
                 <p className="text-gray-600 text-sm">This Week</p>
               </div>
@@ -242,7 +248,6 @@ const HomePage = () => {
       </div>
 
       <div className="container mx-auto px-4 pb-12">
-        {/* Enhanced Search Section */}
         <section className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-12">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-3">
@@ -335,7 +340,7 @@ const HomePage = () => {
             <div className="flex items-center justify-center mt-4 space-x-6 text-sm">
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                <span>Total: {allUsers.length} members</span>
+                <span>Total: {totalUsers} members</span>
               </div>
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-[#4F46E5] rounded-full mr-2"></div>
@@ -347,7 +352,6 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Team Directory Section */}
         <section className="mb-12">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -392,7 +396,7 @@ const HomePage = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8 mb-12">
                 {users.map((user) => (
                   <UserCard
                     key={user.id}
@@ -402,7 +406,6 @@ const HomePage = () => {
                 ))}
               </div>
 
-              {/* Enhanced Pagination */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
                 <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
                   <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -412,7 +415,7 @@ const HomePage = () => {
                     </span>
                     <span>of</span>
                     <span className="font-semibold text-[#4F46E5]">
-                      {allUsers.length}
+                      {totalUsers}
                     </span>
                     <span>team members</span>
                   </div>

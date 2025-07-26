@@ -18,7 +18,7 @@ const RegisterPage = () => {
   const handleDemoData = (demoData) => {
     setEmail(demoData.email);
     setPassword(demoData.password);
-    setConfirmPassword(demoData.password); // Auto-fill confirm password
+    setConfirmPassword(demoData.password);
   };
 
   const handleSubmit = async (e) => {
@@ -58,9 +58,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50">
       <div className="min-h-screen grid lg:grid-cols-2 grid-cols-1">
-        {/* Left Side - Illustration */}
         <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-600 to-indigo-600 p-12 relative overflow-hidden">
-          {/* Background Decorations */}
           <div className="absolute inset-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-pink-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -68,7 +66,6 @@ const RegisterPage = () => {
           </div>
 
           <div className="max-w-lg text-white text-center relative z-40">
-            {/* Hero Content */}
             <div className="mb-12">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-6">
                 <svg
@@ -97,7 +94,6 @@ const RegisterPage = () => {
               </p>
             </div>
 
-            {/* Illustration */}
             <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl mb-8">
               <img
                 src={RegisterSVG}
@@ -108,13 +104,10 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        {/* Right Side - Form */}
         <div className="flex items-center justify-center p-8 lg:p-12 relative">
-          {/* Background decoration for mobile */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-purple-50/30 lg:hidden"></div>
 
           <div className="w-full max-w-md relative z-40">
-            {/* Mobile Illustration */}
             <div className="lg:hidden text-center mb-12">
               <div className="inline-block bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl p-8 mb-8 shadow-2xl">
                 <img
@@ -126,7 +119,6 @@ const RegisterPage = () => {
             </div>
 
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20">
-              {/* Form Header */}
               <div className="text-center mb-8">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl mb-4">
                   <svg
@@ -353,7 +345,6 @@ const RegisterPage = () => {
                 </button>
               </form>
 
-              {/* Social Login */}
               <div className="mt-8">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
@@ -402,7 +393,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Demo Button */}
       <DemoButton type="register" onDemoData={handleDemoData} />
     </div>
   );

@@ -9,7 +9,6 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Check if current page is auth page
   const authPages = ["/login", "/register"];
   const isAuthPage = authPages.includes(location.pathname);
 
@@ -108,7 +107,6 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // If it's an auth page, show minimal navbar with centered logo
   if (isAuthPage) {
     return (
       <nav className="flex justify-center items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50">
@@ -122,7 +120,6 @@ const Navbar = () => {
     );
   }
 
-  // Regular navbar for non-auth pages
   return (
     <nav className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50">
       <div

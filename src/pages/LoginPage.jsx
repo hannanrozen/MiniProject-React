@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogIn } from "lucide-react";
+import { User } from "lucide-react";
+import loginImage from "../assets/icons/login.svg";
 import api from "../services/api";
 import DemoButton from "../components/DemoButton";
 import GoogleIcon from "../assets/icons/google.svg";
@@ -53,7 +54,6 @@ const LoginPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="min-h-screen grid lg:grid-cols-2 grid-cols-1">
         <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-[#4F46E5] via-blue-600 to-purple-600 p-12 relative overflow-hidden">
-          {/* Background Decorations */}
           <div className="absolute inset-0">
             <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -63,7 +63,7 @@ const LoginPage = () => {
           <div className="max-w-lg text-white text-center relative z-40">
             <div className="mb-12">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl mb-6">
-                <LogIn size={32} className="text-white" />
+                <User size={32} className="text-white" />
               </div>
               <h2 className="text-5xl font-black mb-6 leading-tight">
                 Welcome Back to
@@ -71,35 +71,36 @@ const LoginPage = () => {
                   Staffinity
                 </span>
               </h2>
-              <p className="text-xl text-blue-100 leading-relaxed font-medium">
+              <p className="text-xl text-blue-100 leading-relaxed font-medium mb-8">
                 Login to manage your team, track users, and access all premium
                 features in one centralized dashboard.
               </p>
-            </div>
 
-            <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
-              <div className="w-full max-w-md mx-auto bg-gradient-to-br from-white/20 to-blue-100/20 rounded-3xl p-12 flex items-center justify-center">
-                <LogIn size={96} className="text-white drop-shadow-2xl" />
+              <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl mb-8">
+                <img
+                  src={loginImage}
+                  alt="Login Illustration"
+                  className="w-full h-auto max-w-md mx-auto drop-shadow-2xl"
+                />
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-center justify-center p-8 lg:p-12 relative">
-          {/* Background decoration for mobile */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-blue-50/30 lg:hidden"></div>
 
           <div className="w-full max-w-md relative z-40">
             <div className="lg:hidden text-center mb-12">
               <div className="inline-block bg-gradient-to-br from-[#4F46E5] to-purple-600 rounded-3xl p-8 mb-8 shadow-2xl">
-                <LogIn size={64} className="text-white" />
+                <User size={64} className="text-white" />
               </div>
             </div>
 
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20">
               <div className="text-center mb-8">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-[#4F46E5] to-purple-600 rounded-2xl mb-4">
-                  <LogIn size={24} className="text-white" />
+                  <User size={24} className="text-white" />
                 </div>
                 <h1 className="text-3xl font-black text-gray-900 mb-3">
                   Welcome Back
@@ -326,7 +327,6 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Demo Button */}
       <DemoButton type="login" onDemoData={handleDemoData} />
     </div>
   );

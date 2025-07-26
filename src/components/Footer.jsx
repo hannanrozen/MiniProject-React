@@ -11,50 +11,37 @@ const Footer = () => {
       { label: "Pricing", href: "#pricing" },
       { label: "Team Directory", href: "/home" },
     ],
-    legal: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Cookie Policy", href: "#" },
-      { label: "GDPR", href: "#" },
+    support: [
+      { label: "Help Center", href: "#" },
+      { label: "Contact Us", href: "#" },
+      { label: "FAQ", href: "#" },
+      { label: "System Status", href: "#" },
     ],
   };
 
   const socialLinks = [
     {
-      name: "Twitter",
-      href: "#",
-      icon: <Twitter className="w-5 h-5" />,
-    },
-    {
       name: "LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/hannanrozen/",
       icon: <Linkedin className="w-5 h-5" />,
     },
     {
       name: "GitHub",
-      href: "#",
+      href: "https://github.com/hannanrozen",
       icon: <Github className="w-5 h-5" />,
-    },
-    {
-      name: "Discord",
-      href: "#",
-      icon: <MessageSquare className="w-5 h-5" />,
     },
   ];
 
   return (
     <footer className="bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white relative overflow-hidden">
-      {/* Background Decorations */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#4F46E5]/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Main Footer Content */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="mb-8">
                 <div className="flex items-center mb-6">
@@ -71,7 +58,6 @@ const Footer = () => {
                   scale your success.
                 </p>
 
-                {/* Newsletter Signup */}
                 <div className="mb-6">
                   <h4 className="text-sm font-semibold text-white mb-3">
                     Stay Updated
@@ -103,79 +89,55 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Links Sections */}
             <div className="lg:col-span-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Product */}
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-6">Product</h3>
-                  <ul className="space-y-3">
-                    {footerSections.product.map((link) => (
-                      <li key={link.label}>
-                        <a
-                          href={link.href}
-                          className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="flex justify-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-6">
+                      Product
+                    </h3>
+                    <ul className="space-y-3">
+                      {footerSections.product.map((link) => (
+                        <li key={link.label}>
+                          <a
+                            href={link.href}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                {/* Legal */}
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-6">Legal</h3>
-                  <ul className="space-y-3">
-                    {footerSections.legal.map((link) => (
-                      <li key={link.label}>
-                        <a
-                          href={link.href}
-                          className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-6">
+                      Support
+                    </h3>
+                    <ul className="space-y-3">
+                      {footerSections.support.map((link) => (
+                        <li key={link.label}>
+                          <a
+                            href={link.href}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-8">
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              {/* Copyright */}
-              <div className="flex items-center space-x-4 text-gray-400 text-sm">
+            <div className="flex items-center justify-center">
+              <div className="text-gray-400 text-sm text-center">
                 <span>© {currentYear} Staffinity. All rights reserved.</span>
-              </div>
-
-              {/* Additional Info */}
-              <div className="flex items-center space-x-6 text-gray-400 text-sm">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                  <span>All systems operational</span>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
-                  <span>Enterprise Security</span>
-                </div>
               </div>
             </div>
           </div>
