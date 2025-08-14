@@ -381,7 +381,7 @@ const RegisterPage = () => {
                 <p className="text-gray-600">
                   Already have an account?{" "}
                   <button
-                    onClick={() => navigate("/login")}
+                    to="/login"
                     className="text-purple-600 hover:text-purple-700 font-semibold transition-colors duration-200"
                   >
                     Sign in here

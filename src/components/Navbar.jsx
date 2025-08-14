@@ -121,8 +121,12 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50">
+    <nav
+      data-testid="navbar"
+      className="flex justify-between items-center py-4 px-6 md:px-12 shadow-sm bg-white fixed w-full z-50"
+    >
       <div
+        data-testid="navbar-logo"
         className="flex items-center cursor-pointer"
         onClick={handleLogoClick}
       >

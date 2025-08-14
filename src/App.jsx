@@ -1,18 +1,17 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserDetailPage from "./pages/UserDetailPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
 import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <ErrorBoundary>
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -35,7 +34,7 @@ function App() {
           }
         />
       </Routes>
-    </Router>
+    </ErrorBoundary>
   );
 }
 

@@ -36,6 +36,7 @@ const Features = () => {
   return (
     <section
       id="features"
+      data-testid="features"
       className="py-24 px-6 md:px-12 bg-white relative overflow-hidden"
     >
       {/* Background decoration */}

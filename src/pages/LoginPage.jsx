@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "lucide-react";
 import loginImage from "../assets/icons/login.svg";
@@ -14,14 +14,36 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
   const handleDemoData = (demoData) => {
     setEmail(demoData.email);
     setPassword(demoData.password);
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
     setLoading(true);
     setError("");
     setSuccess("");
@@ -186,6 +208,11 @@ const LoginPage = () => {
                       required
                     />
                   </div>
+                  {errors.email && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {errors.email}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -217,6 +244,11 @@ const LoginPage = () => {
                       required
                     />
                   </div>
+                  {errors.password && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {errors.password}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between">

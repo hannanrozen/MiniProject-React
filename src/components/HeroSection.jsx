@@ -1,6 +1,11 @@
+import React from "react";
+
 const HeroSection = () => {
   return (
-    <section className="pt-32 pb-24 px-6 md:px-12 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-center relative overflow-hidden">
+    <section
+      data-testid="hero"
+      className="pt-32 pb-24 px-6 md:px-12 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-center relative overflow-hidden"
+    >
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-[#4F46E5]/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -38,7 +43,10 @@ const HeroSection = () => {
           </button>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+        <div
+          data-testid="hero-stats"
+          className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto"
+        >
           <div className="text-center">
             <div className="text-3xl font-black text-[#4F46E5] mb-2">10K+</div>
             <div className="text-sm font-semibold text-gray-600">

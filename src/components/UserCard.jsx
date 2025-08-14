@@ -4,6 +4,7 @@ import { MessageCircle } from "lucide-react";
 const UserCard = ({ user, onClick }) => {
   return (
     <div
+      data-testid="user-card"
       onClick={() => onClick(user.id)}
       className="group relative bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl cursor-pointer transition-all duration-300 hover:-translate-y-1"
     >

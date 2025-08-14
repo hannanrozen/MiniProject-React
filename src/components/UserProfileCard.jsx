@@ -3,7 +3,10 @@ import { Mail } from "lucide-react";
 
 const UserProfileCard = ({ user }) => {
   return (
-    <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+    <div
+      data-testid="user-card"
+      className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20"
+    >
       <div className="relative h-48 bg-gradient-to-br from-[#4F46E5] via-purple-600 to-blue-600">
         <div className="absolute inset-0">
           <div className="absolute top-4 left-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
@@ -51,7 +54,10 @@ const UserProfileCard = ({ user }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 pt-6 border-t border-gray-100">
+        <div
+          data-testid="user-stats"
+          className="grid grid-cols-3 gap-6 pt-6 border-t border-gray-100"
+        >
           <div className="text-center group cursor-pointer transition-all duration-300 hover:bg-[#4F46E5]/5 rounded-2xl p-4">
             <div className="text-3xl font-black text-[#4F46E5] mb-2 group-hover:scale-110 transition-transform duration-300">
               #{user.id}

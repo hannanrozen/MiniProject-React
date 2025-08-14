@@ -7,6 +7,7 @@ const BackButton = ({ to = "/home" }) => {
 
   return (
     <button
+      data-testid="back-button"
       onClick={() => navigate(to)}
       className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl hover:bg-white hover:text-[#4F46E5] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-white/20"
     >
